@@ -9,6 +9,10 @@ class ApplicationController < ActionController::Base
  end
 
  def after_sign_in_path_for(resource)
-    donors_dashboard_path if resource.is_a?(User) # Adjust based on your model
+   if resource.admin?
+    admin_dashboard_path  
+   else
+    donors_dashboard_path 
+   end
  end
 end
