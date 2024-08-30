@@ -1,0 +1,2 @@
+module Donors::DashboardsHelper
+end
