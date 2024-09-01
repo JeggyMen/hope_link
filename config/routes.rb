@@ -1,12 +1,18 @@
 Rails.application.routes.draw do
+  devise_for :users, controllers: { registration: 'users/registrations' }
+
   namespace :admin do
-    get 'dashboard', to:'dashboards#index'
+    get 'dashboard', to: 'dashboards#index'
+    resources :donations, only: [:index] 
+    resources :donors, only: [:index]
   end
+
   namespace :donors do
-     get 'dashboard', to: 'dashboards#index'
+    get 'dashboard', to: 'dashboards#show'
+    resources :donations, only: [:new, :create]
   end
+
   get 'home/index'
-  devise_for :users
   root 'home#index'
 
   if Rails.env.development?

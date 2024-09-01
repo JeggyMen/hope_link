@@ -1,0 +1,26 @@
+<h1>All Donations</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Donor Name</th>
+      <th>Email</th>
+      <th>Donation Date</th>
+      <th>Amount (₱)</th>
+      <th>Allocation</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @donations.each do |donation| %>
+      <tr>
+        <td><%= donation.user.name %></td>
+        <td><%= donation.user.email %></td>
+        <td><%= donation.donation_date.strftime("%B %d, %Y") %></td>
+        <td>₱<%= number_to_currency(donation.amount, unit: "", precision: 2) %></td>
+        <td><%= donation.name_of_allocation %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= link_to 'Back to Admin Dashboard', admin_dashboard_path, class: 'btn btn-secondary' %>

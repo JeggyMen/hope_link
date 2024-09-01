@@ -1,2 +1,5 @@
 <h1>Admin Dashboard</h1>
-<p>Welcome to the Admin Dashboard. Features will be added soon!</p>
+<div class="admin-actions">
+  <%= link_to 'View All Donations', admin_donations_path, class: 'btn btn-primary' %>
+  <%= link_to 'List of Donors', admin_donors_path, class: 'btn btn-secondary' %>
+</div>
