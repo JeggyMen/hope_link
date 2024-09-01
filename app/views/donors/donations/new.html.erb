@@ -1,0 +1,21 @@
+<h1>New Donation</h1>
+
+<%= form_with model: @donation, url: donors_donations_path, local: true do |form| %>
+
+  <div class="field">
+    <%= form.label :amount  %> ₱
+    <%= form.number_field :amount, step: 0.01 %>
+  </div>
+
+  <div class="field">
+    <%= form.label :name_of_allocation %>
+    <%= form.select :name_of_allocation, ['Food', 'Medicine', 'Clothes', 'Emergency Fund', 'Other Needs'] %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit 'Send Donation' %>
+  </div>
+<% end %>
+
+<%= link_to 'Back to Dashboard', donors_dashboard_path, class: 'btn btn-secondary' %>
+
