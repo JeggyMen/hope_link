@@ -1,4 +1,10 @@
 <h1>Admin Dashboard</h1>
+
+<div class="dashboard-section">
+  <h2>Total Donations Available</h2>
+  <p>₱<%= number_to_currency(@total_donations, unit: "", precision: 2) %></p>
+</div>
+
 <div class="admin-actions">
   <%= link_to 'View All Donations', admin_donations_path, class: 'btn btn-primary' %>
   <%= link_to 'List of Donors', admin_donors_path, class: 'btn btn-secondary' %>
