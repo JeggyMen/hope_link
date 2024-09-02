@@ -4,6 +4,7 @@ module Admin
     before_action :authorize_admin!
 
     def index
+       @total_donations = Donation.sum(:amount)
     end
 
     private
