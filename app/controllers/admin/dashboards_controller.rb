@@ -5,6 +5,8 @@ module Admin
 
     def index
        @total_donations = Donation.sum(:amount)
+       @total_active_donors = User.where(role: 'donor').count
+       @donor_goal = 50
     end
 
     private

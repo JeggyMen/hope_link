@@ -5,7 +5,7 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable, :confirmable
 
-   enum role: { donor: 'donor', admin: 'admin' }
+  enum role: { donor: 'donor', admin: 'admin' }
 
   after_initialize :set_default_role, if: :new_record?
 

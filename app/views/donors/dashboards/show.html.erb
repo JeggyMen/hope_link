@@ -11,17 +11,17 @@
 <table>
   <thead>
     <tr>
+      <th>ID</th>
       <th>Date</th>
       <th>Amount (₱)</th>
-      <th>Allocation</th>
     </tr>
   </thead>
   <tbody>
     <% @donations.each do |donation| %>
       <tr>
+        <td><%= donation.id %></td>
         <td><%= donation.donation_date %></td>
         <td><%= donation.amount %></td>
-        <td><%= donation.name_of_allocation %></td>
       </tr>
     <% end %>
   </tbody>

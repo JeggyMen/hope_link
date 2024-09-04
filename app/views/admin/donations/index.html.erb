@@ -1,23 +1,24 @@
-<h1>All Donations</h1>
+<h1>Donations</h1>
 
 <table>
   <thead>
     <tr>
+      <th>ID</th>
       <th>Donor Name</th>
       <th>Email</th>
       <th>Donation Date</th>
       <th>Amount (₱)</th>
-      <th>Allocation</th>
+      
     </tr>
   </thead>
   <tbody>
     <% @donations.each do |donation| %>
       <tr>
+        <td><%= donation.id %></td>
         <td><%= donation.user.name %></td>
         <td><%= donation.user.email %></td>
         <td><%= donation.donation_date.strftime("%B %d, %Y") %></td>
         <td>₱<%= number_to_currency(donation.amount, unit: "", precision: 2) %></td>
-        <td><%= donation.name_of_allocation %></td>
       </tr>
     <% end %>
   </tbody>

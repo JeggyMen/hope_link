@@ -7,10 +7,6 @@
     <%= form.number_field :amount, step: 0.01 %>
   </div>
 
-  <div class="field">
-    <%= form.label :name_of_allocation %>
-    <%= form.select :name_of_allocation, ['Food', 'Medicine', 'Clothes', 'Emergency Fund', 'Other Needs'] %>
-  </div>
 
   <div class="actions">
     <%= form.submit 'Send Donation' %>

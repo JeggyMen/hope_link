@@ -9,3 +9,14 @@
   <%= link_to 'View All Donations', admin_donations_path, class: 'btn btn-primary' %>
   <%= link_to 'List of Donors', admin_donors_path, class: 'btn btn-secondary' %>
 </div>
+
+<div> 
+  <h2> Active Donors: <%= @total_active_donors %></h2>
+<div>
+
+<div> 
+ <h2>Donor Goals</h2>
+ <p>Total Donors: <%= @total_active_donors %></p>
+ <p>Goal: <%= @donor_goal %></p>
+ <p>Progress: <%= @total_active_donors %> out of <%= @donor_goal %></p>
+<div>

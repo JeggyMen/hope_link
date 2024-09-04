@@ -10,12 +10,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_08_30_101206) do
+ActiveRecord::Schema[7.1].define(version: 2024_09_03_123041) do
   create_table "donations", force: :cascade do |t|
     t.integer "user_id", null: false
     t.date "donation_date"
     t.float "amount"
-    t.string "name_of_allocation"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_donations_on_user_id"

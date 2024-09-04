@@ -1,9 +1,14 @@
-admin = User.find_or_create_by!(email: 'admin@email.com') do |user|
-  user.name = 'Admin'
-  user.password = 'passwordadmin'  # Make sure to change this to a strong password
-  user.password_confirmation = 'passwordadmin'
-  user.role = 'admin'
-  user.phone_number = '9672648861'
-end
+admin_email = 'admin@email.com'
+admin_password = 'passwordadmin'  
+admin_phone_number = '9672648861'
 
-puts "Admin user created with email: #{admin.email}"
+admin = User.find_or_initialize_by(email: admin_email)
+admin.update(
+  password: admin_password,
+  password_confirmation: admin_password,
+  role: 'admin',
+  phone_number: admin_phone_number,
+  name: 'Admin'
+)
+
+puts "Seeded admin user: #{admin.email}"
