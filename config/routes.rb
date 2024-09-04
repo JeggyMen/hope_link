@@ -5,6 +5,7 @@ Rails.application.routes.draw do
     get 'dashboard', to: 'dashboards#index'
     resources :donations, only: [:index] 
     resources :donors, only: [:index]
+    resources :allocations, only: [:new, :create]
   end
 
   namespace :donors do

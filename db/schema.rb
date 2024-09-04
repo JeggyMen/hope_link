@@ -10,7 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_09_03_123041) do
+ActiveRecord::Schema[7.1].define(version: 2024_09_04_085515) do
+  create_table "allocations", force: :cascade do |t|
+    t.string "category"
+    t.decimal "amount"
+    t.integer "donation_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["donation_id"], name: "index_allocations_on_donation_id"
+  end
+
   create_table "donations", force: :cascade do |t|
     t.integer "user_id", null: false
     t.date "donation_date"
@@ -40,5 +49,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_09_03_123041) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "allocations", "donations"
   add_foreign_key "donations", "users"
 end
