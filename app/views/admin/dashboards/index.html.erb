@@ -1,8 +1,13 @@
 <h1>Admin Dashboard</h1>
 
 <div class="dashboard-section">
-  <h2>Total Donations Available</h2>
+  <h2>Total Donations</h2>
   <p>₱<%= number_to_currency(@total_donations, unit: "", precision: 2) %></p>
+</div>
+
+<div class="dashboard-section">
+  <h2>Unallocated Donations</h2>
+  <td><%= number_to_currency(@remaining_balance, unit: '₱') %></td>
 </div>
 
 <div class="admin-actions">
@@ -20,3 +25,30 @@
  <p>Goal: <%= @donor_goal %></p>
  <p>Progress: <%= @total_active_donors %> out of <%= @donor_goal %></p>
 <div>
+
+<%= link_to 'Create Allocation', new_admin_allocation_path, class: 'btn btn-primary' %>
+
+<table>
+  <thead>
+    <tr>
+      <th>Category</th>
+      <th>Total Amount</th>
+      <th>Percentage of Donations</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @allocations.group_by(&:category).each do |category, allocations| %>
+      <tr>
+        <td><%= category %></td>
+        <td>
+          <% total_in_category = allocations.sum(&:amount) %>
+          <%= number_to_currency(total_in_category, unit: "₱", format: "%u %n") %>
+        </td>
+        <td>
+          <% percentage = (total_in_category / @total_donations) * 100 %>
+          <%= number_to_percentage(percentage, precision: 0) %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
