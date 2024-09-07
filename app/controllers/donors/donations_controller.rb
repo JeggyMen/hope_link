@@ -11,7 +11,7 @@ module Donors
       @donation.donation_date = Time.current
       
       if @donation.save
-        redirect_to donors_dashboard_path, notice: 'Donation successfully created.'
+        redirect_to donors_dashboard_path, notice: 'Donation successfully sent.'
       else
         render :new
       end

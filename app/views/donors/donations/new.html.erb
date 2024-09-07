@@ -1,17 +1,25 @@
-<h1>New Donation</h1>
+<!-- Outer Container for Centering and Background -->
+<div class="min-h-screen flex items-center justify-center bg-blue-50 p-6">
+  <!-- Inner Container for the Form -->
+  <div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
+    <h1 class="text-2xl font-bold mb-6 text-center">New Donation</h1>
 
-<%= form_with model: @donation, url: donors_donations_path, local: true do |form| %>
+    <%= form_with model: @donation, url: donors_donations_path, local: true do |form| %>
+      <div class="mb-4">
+        <%= form.label :amount, class: 'block text-lg font-medium text-blue-600' %>
+        <div class="flex items-center space-x-2">
+          <span class="text-lg">₱</span>
+          <%= form.number_field :amount, step: 0.01, class: 'w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400' %>
+        </div>
+      </div>
 
-  <div class="field">
-    <%= form.label :amount  %> ₱
-    <%= form.number_field :amount, step: 0.01 %>
+      <div class="mt-4 text-center">
+        <%= form.submit 'Send Donation', class: 'bg-gray-400 hover:bg-gray-600 text-black font-bold py-2 px-4 rounded' %>
+      </div>
+    <% end %>
+
+    <div class="mt-6 text-center">
+      <%= link_to 'Back to Dashboard', donors_dashboard_path, class: 'inline-block bg-gray-300 hover:bg-gray-500 text-black font-bold py-2 px-4 rounded' %>
+    </div>
   </div>
-
-
-  <div class="actions">
-    <%= form.submit 'Send Donation' %>
-  </div>
-<% end %>
-
-<%= link_to 'Back to Dashboard', donors_dashboard_path, class: 'btn btn-secondary' %>
-
+</div>
