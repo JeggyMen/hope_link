@@ -1,1 +1,26 @@
-<h1>Home</h1>
+<div class="home-container min-h-screen flex flex-col items-center justify-center bg-cover bg-center pt-16 pb-16 relative" style="background-image: url(<%= asset_path('holdinghands.jpg') %>);">
+  <!-- Center Content -->
+  <div class="center-content text-center">
+    <!-- Logo Section -->
+    <div class="logo mb-8">
+      <%= image_tag 'hope_link_logo.png', alt: 'Hope Link Logo', class: 'w-80 h-80 mx-auto' %>
+    </div>
+  <!-- Buttons Section -->
+  <div class="buttons flex justify-center space-x-6">
+    <!-- Log in Button Container -->
+    <div class="login-button-container">
+      <%= link_to 'Log in', new_user_session_path, class: 'login-button text-white font-semibold px-6 py-2 bg-transparent border border-white rounded hover:bg-white hover:text-black transition-colors duration-300' %>
+    </div>
+    
+    <!-- Sign Up Button Container -->
+    <div class="signup-button-container">
+      <%= link_to 'Sign Up', new_user_registration_path, class: 'signup-button bg-blue-200 text-black font-semibold px-6 py-2 border border-orange-500 rounded hover:bg-orange-600 hover:text-white transition-colors duration-300' %>
+    </div>
+  </div>
+
+
+
+  </div>
+</div>
+
+

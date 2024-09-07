@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get 'transparency_dashboards/index'
   devise_for :users, controllers: { registration: 'users/registrations' }
 
   namespace :admin do
@@ -12,6 +13,8 @@ Rails.application.routes.draw do
     get 'dashboard', to: 'dashboards#show'
     resources :donations, only: [:new, :create]
   end
+
+  get 'transparency_dashboards/index', as: 'transparency_dashboard'
 
   get 'home/index'
   root 'home#index'
