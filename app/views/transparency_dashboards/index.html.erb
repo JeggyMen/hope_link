@@ -1,0 +1,44 @@
+<h1>Transparency Dashboard</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Total Donations</th>
+      <th>Unallocated Donations</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><%= number_to_currency(@total_donations, unit: '₱') %></td>
+      <td><%= number_to_currency(@remaining_balance, unit: '₱') %></td>
+    </tr>
+  </tbody>
+</table>
+
+<h2>Allocations</h2>
+<table>
+  <thead>
+    <tr>
+      <th>Category</th>
+      <th>Total Amount</th>
+      <th>Percentage of Donations</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @allocations.group_by(&:category).each do |category, allocations| %>
+      <tr>
+        <td><%= category %></td>
+        <td>
+          <% total_in_category = allocations.sum(&:amount) %>
+          <%= number_to_currency(total_in_category, unit: "₱", format: "%u %n") %>
+        </td>
+        <td>
+          <% percentage = (total_in_category / @total_donations) * 100 %>
+          <%= number_to_percentage(percentage, precision: 0) %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= link_to 'Back to Donor Dashboard', donors_dashboard_path, class: 'btn btn-secondary' %>

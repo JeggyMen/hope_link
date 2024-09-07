@@ -6,11 +6,25 @@
   <%= csp_meta_tag %>
   <%= stylesheet_link_tag 'application', media: 'all' %>
   <%= javascript_include_tag 'application' %>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
 
 <body>
-  <p class="notice"><%= notice %></p>
-  <p class="alert"><%= alert %></p>
+<% if notice %>
+  <div class="bg-green-100 border-l-4 border-green-500 text-green-700 p-4 rounded absolute top-1/8 left-1/2 transform -translate-x-1/2 -translate-y-1/2 mt-12 z-50">
+    <%= notice %>
+  </div>
+<% end %>
+
+<% if alert %>
+  <div class="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 rounded absolute top-1/8 left-1/2 transform -translate-x-1/2 -translate-y-1/2 mt-12 z-50">
+    <%= alert %>
+  </div>
+<% end %>
+
+
+
+
 
   <%= yield %>  <!-- This is crucial for rendering the views -->
 </body>
