@@ -1,6 +1,4 @@
-<!-- Main Wrapper with Baby Blue Background Covering the Full Screen -->
 <div class="bg-blue-100 min-h-screen py-6">
-  <!-- Remove the White Background Container, Add Small Margins to Utilize Full Screen -->
   <div class="mx-4 lg:mx-8">
 
     <!-- Main Container -->
@@ -9,8 +7,10 @@
       <h1 class="text-2xl font-bold"><%= @donor.name %></h1>
 
       <!-- Buttons for Transparency Board, Add Donation, Edit Details and Logout -->
-      <div class="space-x-2">
-       <%= link_to 'Logout', destroy_user_session_path, method: :delete, class: 'inline-block bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded' %>
+      <div class="flex space-x-2 items-center">
+        <div class="inline-block">
+          <%= button_to 'Logout', destroy_user_session_path, method: :delete, class: 'bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded' %>
+        </div>
         <%= link_to 'Transparency Board', transparency_dashboard_path, class: 'inline-block bg-gray-400 hover:bg-gray-600 text-black font-bold py-2 px-4 rounded' %>
         <%= link_to 'Add donation', new_donors_donation_path, class: 'inline-block bg-gray-400 hover:bg-gray-600 text-black font-bold py-2 px-4 rounded' %>
         <%= link_to edit_user_registration_path(@donor), class: 'inline-block' do %>

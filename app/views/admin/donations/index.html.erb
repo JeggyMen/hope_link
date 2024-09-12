@@ -1,27 +1,51 @@
-<h1>Donations</h1>
-
-<table>
-  <thead>
-    <tr>
-      <th>ID</th>
-      <th>Donor Name</th>
-      <th>Email</th>
-      <th>Donation Date</th>
-      <th>Amount (₱)</th>
-      
-    </tr>
-  </thead>
-  <tbody>
-    <% @donations.each do |donation| %>
-      <tr>
-        <td><%= donation.id %></td>
-        <td><%= donation.user.name %></td>
-        <td><%= donation.user.email %></td>
-        <td><%= donation.donation_date.strftime("%B %d, %Y") %></td>
-        <td>₱<%= number_to_currency(donation.amount, unit: "", precision: 2) %></td>
-      </tr>
+<div class="min-h-screen bg-blue-300 p-6 flex flex-col space-y-6">
+  <!-- Search Form -->
+  <div class="bg-white p-6 rounded-lg shadow-lg">
+    <h1 class="text-2xl font-bold mb-4">Search Donations</h1>
+    <%= form_with url: admin_donations_path, method: :get, local: true, class: 'flex flex-col space-y-4' do |form| %>
+      <div>
+        <%= form.label :donor_name, 'Donor Name', class: 'block text-lg font-semibold mb-2' %>
+        <%= form.text_field :donor_name, class: 'w-full px-4 py-2 border rounded-lg' %>
+      </div>
+      <div>
+        <%= form.label :email, 'Email', class: 'block text-lg font-semibold mb-2' %>
+        <%= form.text_field :email, class: 'w-full px-4 py-2 border rounded-lg' %>
+      </div>
+      <div class="text-center">
+        <%= form.submit 'Search', class: 'bg-blue-500 text-white font-bold py-2 px-6 rounded hover:bg-blue-600' %>
+      </div>
     <% end %>
-  </tbody>
-</table>
+  </div>
 
-<%= link_to 'Back to Admin Dashboard', admin_dashboard_path, class: 'btn btn-secondary' %>
+  <!-- Donations Table -->
+  <div class="bg-white p-6 rounded-lg shadow-lg">
+    <h1 class="text-2xl font-bold mb-4">Donations</h1>
+    <table class="w-full table-auto border-collapse">
+      <thead>
+        <tr class="bg-gray-200 text-left">
+          <th class="px-4 py-2 border-b">ID</th>
+          <th class="px-4 py-2 border-b">Donor Name</th>
+          <th class="px-4 py-2 border-b">Email</th>
+          <th class="px-4 py-2 border-b">Donation Date</th>
+          <th class="px-4 py-2 border-b">Amount (₱)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @donations.each do |donation| %>
+          <tr class="hover:bg-gray-100">
+            <td class="px-4 py-2 border-b"><%= donation.id %></td>
+            <td class="px-4 py-2 border-b"><%= donation.user.name %></td>
+            <td class="px-4 py-2 border-b"><%= donation.user.email %></td>
+            <td class="px-4 py-2 border-b"><%= donation.donation_date.strftime("%B %d, %Y") %></td>
+            <td class="px-4 py-2 border-b">₱<%= number_to_currency(donation.amount, unit: "", precision: 2) %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Back to Admin Dashboard Link -->
+  <div class="text-center">
+    <%= link_to 'Back to Admin Dashboard', admin_dashboard_path, class: 'bg-blue-500 text-white font-bold py-2 px-6 rounded hover:bg-blue-600' %>
+  </div>
+</div>
