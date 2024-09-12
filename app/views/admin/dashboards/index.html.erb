@@ -1,54 +1,90 @@
-<h1>Admin Dashboard</h1>
+<!-- app/views/admin/dashboards/index.html.erb -->
 
-<div class="dashboard-section">
-  <h2>Total Donations</h2>
-  <p>₱<%= number_to_currency(@total_donations, unit: "", precision: 2) %></p>
+<div class="bg-blue-50 min-h-screen p-4">
+  <div class="flex justify-between items-center mb-4">
+    <p class="text-lg font-semibold">Welcome back, <%= @admin.name %>!</p>
+    <div class="flex space-x-2">
+      <%= link_to 'View All Donations', admin_donations_path, class: 'bg-gray-200 text-gray-700 font-bold py-2 px-4 rounded hover:bg-gray-300' %>
+      <%= link_to 'List of Donors', admin_donors_path, class: 'bg-gray-200 text-gray-700 font-bold py-2 px-4 rounded hover:bg-gray-300' %>
+      <%= link_to 'Create Allocation', new_admin_allocation_path, class: 'bg-gray-200 text-gray-700 font-bold py-2 px-4 rounded hover:bg-gray-300' %>
+    </div>
+  </div>
+
+  <!-- Donation Summary -->
+  <h2 class="text-xl font-bold text-center mb-2">Donations</h2>
+  <div class="flex justify-center space-x-4 mb-4">
+    <div class="bg-white p-4 rounded-lg shadow-md text-center w-1/4">
+      <p class="text-lg font-semibold mb-1">Total Donations on Hand</p>
+      <p class="text-2xl font-bold"><%= number_to_currency(@remaining_balance, unit: '₱', precision: 2) %></p>
+    </div>
+    <div class="bg-white p-4 rounded-lg shadow-md text-center w-1/4">
+      <p class="text-lg font-semibold mb-1">Total Money Donated</p>
+      <p class="text-2xl font-bold"><%= number_to_currency(@total_donations, unit: '₱', precision: 2) %></p>
+    </div>
+  </div>
+
+  <!-- Donor Summary and Goals -->
+  <h2 class="text-xl font-bold text-center mb-2">Donors</h2>
+  <div class="flex justify-center space-x-4 mb-4">
+    <div class="bg-white p-4 rounded-lg shadow-md text-center w-1/4">
+      <p class="text-lg font-semibold mb-1"> No. of Active Donors
+      <p class="text-2xl font-bold"><%= @total_active_donors %></p>
+    </div>
+
+    <!-- Donor Goals -->
+    <div class="bg-white p-4 rounded-lg shadow-md text-center w-1/4">
+      <p class="text-lg font-semibold mb-1">Donor Goals</p>
+      <p class="text-2xl font-bold mb-2"><%= @total_active_donors %> / <%= @donor_goal %></p>
+      <div class="w-full bg-gray-300 h-2 rounded-full">
+        <div class="bg-blue-500 h-2 rounded-full" style="width: <%= (@total_active_donors.to_f / @donor_goal) * 100 %>%"></div>
+      </div>
+    </div>
+  </div>
+
+<!-- Allocation Section -->
+<div class="flex justify-center items-center space-x-4">
+  <!-- Allocation Table -->
+  <div class="w-1/2 bg-white p-4 rounded-lg shadow-md flex flex-col justify-center" style="min-height: 400px;">
+    <h2 class="text-xl font-bold text-left mb-2">Allocation</h2>
+    <table class="table-auto border-collapse w-full text-center">
+      <thead>
+        <tr class="bg-blue-300">
+          <th class="p-2 border">Labels</th>
+          <th class="p-2 border">% of total donation</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @allocations.group_by(&:category).each do |category, allocations| %>
+          <tr>
+            <td class="p-2 border"><%= category %></td>
+            <td class="p-2 border">
+              <% total_in_category = allocations.sum(&:amount) %>
+              <% percentage = (total_in_category / @total_donations) * 100 %>
+              <%= number_to_percentage(percentage, precision: 0) %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+
+ <!-- Pie Chart Section -->
+<div class="w-1/2 flex items-center justify-center bg-white p-0 rounded-lg shadow-md" style="min-height: 400px;">
+  <div class="w-full h-full flex items-center justify-center">
+    <!-- Make sure this canvas fills the parent div -->
+    <canvas id="allocationPieChart" style="flex-grow: 1/2;"></canvas>
+  </div>
 </div>
 
-<div class="dashboard-section">
-  <h2>Unallocated Donations</h2>
-  <td><%= number_to_currency(@remaining_balance, unit: '₱') %></td>
-</div>
+<!-- Add some margin at the bottom -->
+<div class="mt-4"></div>
 
-<div class="admin-actions">
-  <%= link_to 'View All Donations', admin_donations_path, class: 'btn btn-primary' %>
-  <%= link_to 'List of Donors', admin_donors_path, class: 'btn btn-secondary' %>
-</div>
 
-<div> 
-  <h2> Active Donors: <%= @total_active_donors %></h2>
-<div>
+<!-- Pass the allocation data from Rails to JavaScript -->
+<script type="text/javascript">
+  window.allocationLabels = <%= raw @allocations.group_by(&:category).keys.to_json %>;
+  window.allocationValues = <%= raw @allocations.group_by(&:category).map { |category, allocations| (allocations.sum(&:amount) / @total_donations) * 100 }.to_json %>;
+</script>
 
-<div> 
- <h2>Donor Goals</h2>
- <p>Total Donors: <%= @total_active_donors %></p>
- <p>Goal: <%= @donor_goal %></p>
- <p>Progress: <%= @total_active_donors %> out of <%= @donor_goal %></p>
-<div>
-
-<%= link_to 'Create Allocation', new_admin_allocation_path, class: 'btn btn-primary' %>
-
-<table>
-  <thead>
-    <tr>
-      <th>Category</th>
-      <th>Total Amount</th>
-      <th>Percentage of Donations</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @allocations.group_by(&:category).each do |category, allocations| %>
-      <tr>
-        <td><%= category %></td>
-        <td>
-          <% total_in_category = allocations.sum(&:amount) %>
-          <%= number_to_currency(total_in_category, unit: "₱", format: "%u %n") %>
-        </td>
-        <td>
-          <% percentage = (total_in_category / @total_donations) * 100 %>
-          <%= number_to_percentage(percentage, precision: 0) %>
-        </td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+<!-- Include the external JavaScript file -->
+<%= javascript_include_tag 'allocation_pie_chart' %>
