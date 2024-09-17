@@ -1,0 +1,5 @@
+// Open the payment link in a new tab
+window.open("<%= payment_link['data']['attributes']['checkout_url'] %>", "_blank");
+
+// Optionally, you can redirect the user back to the referring page
+window.location.href = "<%= request.referer %>";

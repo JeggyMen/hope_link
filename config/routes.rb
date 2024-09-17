@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get 'partners/index'
   get 'transparency_dashboards/index'
   devise_for :users, controllers: { registration: 'users/registrations' }
 
@@ -15,7 +16,7 @@ Rails.application.routes.draw do
   end
 
   get 'transparency_dashboards/index', as: 'transparency_dashboard'
-
+  get 'partners', to: 'partners#index'
   get 'home/index'
   root 'home#index'
 

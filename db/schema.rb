@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_09_04_085515) do
+ActiveRecord::Schema[7.1].define(version: 2024_09_12_120940) do
   create_table "allocations", force: :cascade do |t|
     t.string "category"
     t.decimal "amount"
@@ -26,6 +26,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_09_04_085515) do
     t.float "amount"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "payment_link_id"
     t.index ["user_id"], name: "index_donations_on_user_id"
   end
 

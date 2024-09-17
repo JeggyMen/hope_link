@@ -5,7 +5,7 @@
     <%= form_with(model: @allocation, url: admin_allocations_path, method: :post) do |form| %>
       <div class="mb-4">
         <%= form.label :category, class: 'block text-lg font-semibold mb-2' %>
-        <%= form.select :category, ['Food', 'Clothes', 'Medicine', 'Emergency Funds', 'Other Needs'], {}, class: 'form-control w-full px-4 py-2 border rounded-lg' %>
+        <%= form.select :category, ['Food (Philippine Food Bank Foundation, Inc.)', 'Clothes (Caritas Manila Segunda Mana)', 'Medicine (Philippine Red Cross)', 'Emergency Funds( Philippine Disaster Resilience Foundation )', 'Other Needs (Make a wish Philippines)'], {}, class: 'form-control w-full px-4 py-2 border rounded-lg' %>
       </div>
 
       <div class="mb-4">

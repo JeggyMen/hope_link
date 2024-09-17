@@ -16,44 +16,56 @@
     </div>
   </div>
 
-  <!-- Allocation section with space for pie chart -->
-  <div class="flex justify-between items-start">
-    <!-- Allocation Table -->
-    <div class="w-1/3 mx-auto">
-      <h2 class="text-xl font-bold text-center mb-3">Allocation</h2>
-      <table class="table-auto border-collapse w-full">
-        <thead>
-          <tr class="bg-gray-200 text-left">
-            <th class="p-2 border">Labels</th>
-            <th class="p-2 border">% of total donation</th>
-          </tr>
-        </thead>
-        <tbody>
-          <% @allocations.group_by(&:category).each do |category, allocations| %>
-            <tr>
-              <td class="p-2 border"><%= category %></td>
-              <td class="p-2 border">
-                <% total_in_category = allocations.sum(&:amount) %>
-                <% percentage = (total_in_category / @total_donations) * 100 %>
-                <%= number_to_percentage(percentage, precision: 0) %>
-              </td>
+  <!-- Allocation section -->
+  <div class="flex justify-center space-x-4 mb-6">
+    <!-- Container for Allocation Table and Pie Chart -->
+    <div class="w-full max-w-6xl flex justify-between space-x-4 mx-auto">
+      <!-- Allocation Table -->
+      <div class="bg-white p-4 rounded-lg shadow-md w-full flex-1">
+        <h2 class="text-xl font-bold text-center mb-3">Allocation</h2>
+        <table class="table-auto border-collapse w-full">
+          <thead>
+            <tr class="bg-gray-200 text-left">
+              <th class="p-2 border">Labels</th>
+              <th class="p-2 border">% of total donation</th>
             </tr>
-          <% end %>
-        </tbody>
-      </table>
-    </div>
+          </thead>
+          <tbody>
+            <% @allocations.group_by(&:category).each do |category, allocations| %>
+              <tr>
+                <td class="p-2 border"><%= category %></td>
+                <td class="p-2 border">
+                  <% total_in_category = allocations.sum(&:amount) %>
+                  <% percentage = (total_in_category / @total_donations) * 100 %>
+                  <%= number_to_percentage(percentage, precision: 0) %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
 
-    <!-- Placeholder for Pie Chart -->
-    <div class="w-1/2 flex justify-center items-center">
-      <!-- Add your pie chart code here later -->
-      <div class="bg-gray-100 w-full h-64 rounded-md shadow-md flex items-center justify-center">
-        <p class="text-gray-500">
+      <!-- Pie Chart Section -->
+      <div class="bg-white p-4 rounded-lg shadow-md w-full flex-1">
+        <canvas id="allocationPieChart" style="width: 100%; height: 100%;"></canvas>
       </div>
     </div>
   </div>
 
-  <!-- Back link -->
+  <div class="text-center mt-6">
+    <%= link_to 'Our Partners', partners_index_path, class: 'bg-green-400 text-white font-bold py-2 px-4 rounded hover:bg-green-700' %>
+  </div>
+
   <div class="text-center mt-6">
     <%= link_to 'Back to Donor Dashboard', donors_dashboard_path, class: 'bg-gray-500 text-white font-bold py-2 px-4 rounded hover:bg-gray-600' %>
   </div>
 </div>
+
+<!-- Pass the allocation data from Rails to JavaScript -->
+<script type="text/javascript">
+  window.allocationLabels = <%= raw @allocations.group_by(&:category).keys.to_json %>;
+  window.allocationValues = <%= raw @allocations.group_by(&:category).map { |category, allocations| (allocations.sum(&:amount) / @total_donations) * 100 }.to_json %>;
+</script>
+
+<!-- Include the external JavaScript file -->
+<%= javascript_include_tag 'allocation_pie_chart' %>

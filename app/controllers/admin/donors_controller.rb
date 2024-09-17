@@ -4,7 +4,8 @@ module Admin
     before_action :ensure_admin
 
     def index
-      @donors = User.where(role: 'donor').order(:name)
+      @donations = Donation.all.order(created_at: :desc) # Ensure @donations is initialized
+      @donors = User.where(role: 'donor').order(:name) # Ensure @donors is initialized
     end
 
     private
