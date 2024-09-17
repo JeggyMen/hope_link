@@ -1,11 +1,11 @@
 <div class="min-h-screen bg-blue-300 p-6 flex flex-col space-y-6">
   <!-- Search Form -->
   <div class="bg-white p-6 rounded-lg shadow-lg">
-    <h1 class="text-2xl font-bold mb-4">Search Donations</h1>
-    <%= form_with url: admin_donations_path, method: :get, local: true, class: 'flex flex-col space-y-4' do |form| %>
+    <h1 class="text-2xl font-bold mb-4">Search Donors</h1>
+    <%= form_with url: admin_donors_path, method: :get, local: true, class: 'flex flex-col space-y-4' do |form| %>
       <div>
-        <%= form.label :donor_name, 'Donor Name', class: 'block text-lg font-semibold mb-2' %>
-        <%= form.text_field :donor_name, class: 'w-full px-4 py-2 border rounded-lg' %>
+        <%= form.label :name, 'Donor Name', class: 'block text-lg font-semibold mb-2' %>
+        <%= form.text_field :name, class: 'w-full px-4 py-2 border rounded-lg' %>
       </div>
       <div>
         <%= form.label :email, 'Email', class: 'block text-lg font-semibold mb-2' %>
@@ -17,7 +17,7 @@
     <% end %>
   </div>
 
-  <!-- Donations Table -->
+  <!-- Donors Table with Scroll -->
   <div class="bg-white p-6 rounded-lg shadow-lg">
     <h1 class="text-2xl font-bold mb-4">Donations</h1>
     <table class="w-full table-auto border-collapse">
@@ -27,14 +27,15 @@
           <th class="px-4 py-2 border-b">Donor Name</th>
           <th class="px-4 py-2 border-b">Email</th>
           <th class="px-4 py-2 border-b">Donation Date</th>
+          
           <th class="px-4 py-2 border-b">Amount (₱)</th>
         </tr>
       </thead>
       <tbody>
-        <% @donations.each do |donation| %>
+        <% @donations.each do |donation| %> <!-- Iterate over @donations, not @donors -->
           <tr class="hover:bg-gray-100">
             <td class="px-4 py-2 border-b"><%= donation.id %></td>
-            <td class="px-4 py-2 border-b"><%= donation.user.name %></td>
+            <td class="px-4 py-2 border-b"><%= donation.user.name %></td> <!-- Access donor via donation.user -->
             <td class="px-4 py-2 border-b"><%= donation.user.email %></td>
             <td class="px-4 py-2 border-b"><%= donation.donation_date.strftime("%B %d, %Y") %></td>
             <td class="px-4 py-2 border-b">₱<%= number_to_currency(donation.amount, unit: "", precision: 2) %></td>
@@ -43,6 +44,7 @@
       </tbody>
     </table>
   </div>
+
 
   <!-- Back to Admin Dashboard Link -->
   <div class="text-center">

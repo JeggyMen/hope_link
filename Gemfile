@@ -73,3 +73,6 @@ end
 
 gem 'devise'
 gem 'webpacker'
+gem 'httparty'
+gem 'dotenv-rails', groups: [:development, :test]
+

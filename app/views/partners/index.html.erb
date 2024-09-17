@@ -1,0 +1,58 @@
+<div class="bg-white min-h-screen grid grid-rows-2 overflow-hidden">
+  <div class="p-6 row-span-1 flex items-center mx-6 md:mx-12 lg:mx-24">
+    <div class="flex-1">
+      <h2 id="partner-name" class="text-3xl font-bold mb-4"></h2>
+      <hr class="my-4 border-gray-300 w-2/3">
+      <p id="partner-description" class="text-gray-700 text-lg mb-4"></p>
+    </div>
+    <div class="flex-shrink-0 w-1/3">
+       <img id="partner-image" src="<%= asset_path(@partners.first[:image]) %>" alt="Partner Image" class="w-full h-auto">
+    </div>
+  </div>
+
+  <div class="bg-white p-6 row-span-1">
+    <h1 class="text-2xl font-bold text-center mb-6">Our Partners</h1>
+
+    <div class="flex justify-center space-x-6 mb-16">
+      <% @partners.each_with_index do |partner, index| %>
+        <div class="flex flex-col items-center cursor-pointer" 
+            data-image="<%= asset_path(partner[:image]) %>" 
+            data-name="<%= partner[:name] %>" 
+            data-description="<%= partner[:description] %>" 
+            onclick="showPartner(<%= index %>)">
+            <img src="<%= asset_path(partner[:image]) %>" alt="<%= partner[:name] %>" class="w-24 h-24 rounded-full shadow-lg mb-2">
+        </div>
+      <% end %>
+    </div>
+
+    <div class="text-center">
+      <%= link_to 'Back to Donor Dashboard', donors_dashboard_path, class: 'bg-gray-50 text-gray-900 font-bold py-2 px-4 rounded hover:bg-gray-300' %>
+    </div>
+  </div>
+</div>
+
+<script>
+  const partners = <%= raw @partners.to_json %>;
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const firstPartner = partners[0];
+    document.getElementById('partner-name').innerText = firstPartner.name;
+    document.getElementById('partner-description').innerText = firstPartner.description;
+    const img = document.getElementById('partner-image');
+    img.src = secondPartner.image; 
+    img.classList.remove('hidden');
+  });
+
+  function showPartner(index) {
+    const partnerElement = document.querySelector(`[onclick="showPartner(${index})"]`);
+    const partnerName = partnerElement.getAttribute('data-name');
+    const partnerDescription = partnerElement.getAttribute('data-description');
+    const partnerImage = partnerElement.getAttribute('data-image');
+
+    document.getElementById('partner-name').innerText = partnerName;
+    document.getElementById('partner-description').innerText = partnerDescription;
+    const img = document.getElementById('partner-image');
+    img.src = partnerImage;
+    img.classList.remove('hidden');  // Show the image if it was hidden
+}
+</script>
