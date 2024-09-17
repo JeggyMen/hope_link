@@ -11,13 +11,13 @@ module Donors
       @donation.donation_date = Date.today
       
       if @donation.save
-        amount = (@donation.amount.to_f * 100).to_i # Convert to cents for Paymongo
+        amount = (@donation.amount.to_f * 100).to_i 
         payment_link = create_paymongo_link(amount)
         
         if payment_link && payment_link['data']
           respond_to do |format|
             format.html { redirect_to payment_link['data']['attributes']['checkout_url'], allow_other_host: true }
-            format.js   # This will render create.js.erb
+            format.js   
           end
         else
           flash[:error] = "Error creating payment link."
@@ -41,7 +41,7 @@ module Donors
       uri = URI.parse("https://api.paymongo.com/v1/links")
       request = Net::HTTP::Post.new(uri)
       request.content_type = "application/json"
-      request["Authorization"] = "Basic #{Base64.strict_encode64(ENV['PAYMONGO_SECRET_KEY'])}" # use environment variable
+      request["Authorization"] = "Basic #{Base64.strict_encode64(ENV['PAYMONGO_SECRET_KEY'])}" 
       request.body = {
         data: {
           attributes: {
